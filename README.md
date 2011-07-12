@@ -1,6 +1,9 @@
 See index.html for an example of usage.  Documentation coming soon.
 
 The mission of jQuery Form Warden are as follows:
+
+# Features
+
 * to decouple the form validation from the UI library
 * to allow for easy overriding of processErrors
 * provide Regex support
