@@ -1,5 +1,12 @@
 See index.html for an example of usage.  Documentation coming soon.
 
+The mission of jQuery Form Warden are as follows:
+*to decouple the form validation from the UI library*
+*to allow for easy overriding of processErrors*
+*provide Regex support*
+*Work in all browsers >IE6, FF, Chrome, Safari* 
+
+Currently Form Warden does all these things.
 
 The MIT License (MIT)
 Copyright (c) 2011 Whiteboard-IT, LCC
