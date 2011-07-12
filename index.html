@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="jquery-1.6.1.min.js" type="text/javascript"></script>
+    <script src="validation_framework.js" type="text/javascript"></script>
+    <style>
+        .invalid input{
+          border:solid 2px #f00;
+        }
+        .invalid{
+          color:#f00;          
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="index.html" >
+        <p>
+        <label>Email: <input type="text" name="email" /></label>
+        </p>
+        <p>
+        <label>First Name: <input type="text" name="firstName" /></label>
+        </p>
+        <p>
+        <label>UserName: <input type="text" name="userName" /></label>
+        </p>
+        <p>
+        <label>InnCode: <input type="text" name="inncode" /></label>
+        </p>
+
+        <p>
+          <select name="select">
+            <option value="">select one...</option>
+            <option>abc</option>
+            <option>def</option>
+          </select>
+        </p>
+
+        <p>
+          <select multiple name="multi">
+            <option>aaa</option>
+            <option>abc</option>
+            <option>def</option>
+          </select>
+        </p>
+
+        <p>
+          <input type="radio" name="radio" value="1" /> Choice 1
+          <input type="radio" name="radio" value="2" /> Choice 2
+        </p>
+
+        <p>
+          <input type="checkbox" name="check" value="1" /> Choice A
+          <input type="checkbox" name="check" value="2" /> Choice B
+        </p>
+
+        <ul class="validation_summary">
+        </ul>
+        <input id="submit_button" type="submit" value="Go" name="submit_button"/>
+    </form>
+ <script type="text/javascript">
+  $(function(){
+     var validationOptions= 
+    {
+      //override the error processing 
+      //processErrors: function(errors){  for(var error in errors){ alert(errors[error]);}},
+      //disable/enable blur
+      //enableBlur:false,	//defaults to true
+      //provide custom validators if desired
+
+      validators : {"inncode":function(value){return value.match(/^\d{5}$/);}}, //not required
+
+      fields:{
+        "inncode":[{isValid:"required", message:"Inncode is required"},
+                    {isValid:"inncode", message:"Inncode must be 5 digits"}],
+
+        "userName":[{isValid:/^[a-z]{3,}?$/i, message:"UserName must be greater than 3 characters and not include any numbers"},
+                    {isValid:"required", message:"UserName is required"}],
+
+        "email":[{isValid:"required", message:"Email is required"},
+                  {isValid:"email", message:"Email must be valid"}],
+
+        "firstName":[{isValid: "required", message: "First Name is required"},
+                      {isValid:function(value, form){ return value.length < 25; }, message:"First Name must be less than 25 characters"}],
+        
+        "select":[{isValid: "required", message: "Select is required"}],
+
+        "radio":[{isValid: "required", message: "radio is required"}],
+
+        "check":[{isValid: "required", message: "check is required"}],
+
+        "multi":[{isValid: "required", message: "multi is required"}]
+      }
+    };
+    $("form").validation(validationOptions);	
+  });
+ </script>
+</body>
+</html>
