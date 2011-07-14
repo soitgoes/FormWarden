@@ -5,7 +5,6 @@ var isValidField = function (form, key, fieldOptions, validators){
    for (var i = 0; i < fieldOptions.length; i++)
    {
     var validation = fieldOptions[i];
-
     if (validation.isValid.test){ //regex
       var pattern = validation.isValid;
       if (!pattern.test(value)){
@@ -26,12 +25,10 @@ var isValidField = function (form, key, fieldOptions, validators){
         }
      }
    }
-      
    return "";
 }
 //if server side don't bother suppling fieldsEntered
 var validateForm= function(form, validationOptions, fieldsEntered){
-
 	var errors = {};
   var hasErrors = false;
 	for (var key in validationOptions.fields){
