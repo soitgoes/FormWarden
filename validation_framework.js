@@ -59,10 +59,6 @@ $(function(){
         var parent = $("[name=" + fieldname + "]",validationForm).parents("p:first");
         parent.append("<span class='star'>*</span>");
         parent.addClass("invalid");
-
-        // var field = $("[name=" + fieldname + "]",validationForm);
-        // field.after("<span class='star'>*</span>");
-        // field.parents("p:first").addClass("invalid");
         validationSummary.append("<li>"+ errors[fieldname]+"</li>");
       }     
     }
@@ -75,6 +71,7 @@ $(function(){
 	  var options = arguments[0] ? jQuery.extend({enableBlur:true},arguments[0]) : {};
 	  if (this[0].tagName !=="FORM"){
 	  	alert("must be a form element");
+      return;
 	  }
 	  var validators = {
       required: function(value){        
