@@ -62,7 +62,16 @@
      var validationOptions= 
     {
       //override the error processing 
-      processErrors: function(results){  for(var item in results){ alert(item.error);}},
+			/*
+      processErrors: function(results){  
+				for(var item in results.fields){ 
+				  var thing = results.fields[item];
+				  if (!thing.valid){
+						alert(thing.error);
+					}
+			  }
+			},
+			*/
       //disable/enable blur
       //enableBlur:false,	//defaults to true
       //provide custom validators if desired
