@@ -85,8 +85,10 @@ $(function(){
         var item = $("[name=" + fieldname+"]");
         if(results.fields[fieldname].visible){
           item.parent().parent().show();
+          item.removeAttr('disabled');
         }else{
           item.parent().parent().hide();
+          item.attr('disabled', 'disabled');
         }
       }
     }
@@ -115,7 +117,7 @@ $(function(){
     options.processVisibility = options.processVisibility ? options.processVisibility : processVisibility;
 	  var getForm = function(){
       var form = {};
-      $("[name]",validationForm).not("[disabled]").each(function(index, item){
+      $("[name]",validationForm).each(function(index, item){
         var val = $(this).val();
         var name = item.name;
 
