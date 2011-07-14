@@ -163,7 +163,7 @@ $(function(){
 		};
 		$(this).submit(function(){
       fieldsEntered  = getForm();
-      //return 
+      return 
        validate();
     });
 		if (options.enableBlur){

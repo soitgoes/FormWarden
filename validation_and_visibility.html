@@ -59,7 +59,7 @@
       //enableBlur:false,	//defaults to true
       //provide custom validators if desired
 
-      validators : {"inncode":function(value){return value.match(/^\d{5}$/);}}, //not required
+      validators : {"inncode":function(value,form){return value.match(/^\d{5}$/);}}, //not required
 
       fields:{
         "inncode":{
