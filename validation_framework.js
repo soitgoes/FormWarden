@@ -1,10 +1,15 @@
 var fieldsEntered = {};
-var isValidField = function (form, key, fieldOptions, validators){
+var isInvalidField = function (form, key, fieldOptions, validators){
+   if (!fieldOptions){
+     return true;
+   }
    var value = form[key];
-   
-   for (var i = 0; i < fieldOptions.length; i++)
+   var checkVisibility  = fieldOptions.push ? false : true; //if there is 
+      //if there is not a visibility function or it is true then execute the validation
+   var validations = checkVisibility  ? fieldOptions.validations : fieldOptions;
+   for (var i = 0; i < validations.length; i++)
    {
-    var validation = fieldOptions[i];
+    var validation = validations[i];
     if (validation.isValid.test){ //regex
       var pattern = validation.isValid;
       if (!pattern.test(value)){
@@ -27,37 +32,63 @@ var isValidField = function (form, key, fieldOptions, validators){
    }
    return "";
 }
+var isVisibleField = function(form, fieldOptions){
+  if (fieldOptions && fieldOptions.isVisible && typeof fieldOptions.isVisible == "function" && !fieldOptions.isVisible(form)){
+     return false;
+  }
+  return true;
+}
 //if server side don't bother suppling fieldsEntered
-var validateForm= function(form, validationOptions, fieldsEntered){
-	var errors = {};
-  var hasErrors = false;
-	for (var key in validationOptions.fields){
-    if (fieldsEntered === undefined || fieldsEntered[key] !== undefined){
-      var result = isValidField(form, key, validationOptions.fields[key], validationOptions.validators);
+var validateForm= function(form, validationOptions){
+	var fields = {};
+  var validForm = true;
+	for (var key in form){
+    if (validationOptions.fields[key]){     
+      var field =  validationOptions.fields[key];
+      var visible = isVisibleField(form, field);
+      var mesg = isInvalidField(form, key, field, validationOptions.validators);
+      var valid = (!visible) || (visible && mesg === "");
+      validForm &= valid;
+      var result ={visible: visible, error: mesg, valid: !!valid};
       if (result){
-        errors[key] =  result;  
-        hasErrors = true;
+        fields[key] =  result;  
       }  
+    }else{
+      fields[key] = {visible: true, error:"", valid:true};
     }		
 	}
-  return hasErrors ? errors : null;	
+  return {fields:fields, validForm:!!validForm};	
 }
 
 $(function(){	
 	$.fn.validation = function() {
     var validationForm = this;
 
-    var processErrors = function(errors){
+    var processErrors = function(result, fieldsEntered){
       var validationSummary = $(".validation_summary",validationForm);     
       validationSummary.html("");
       $("[name]",validationForm).parents("p").removeClass("invalid");
       $("span.star").remove();
-      for(var fieldname in errors){
-        var parent = $("[name=" + fieldname + "]",validationForm).parents("p:first");
-        parent.append("<span class='star'>*</span>");
-        parent.addClass("invalid");
-        validationSummary.append("<li>"+ errors[fieldname]+"</li>");
+      for(var fieldname in result.fields){
+        if (fieldsEntered[fieldname]){
+          if (!result.fields[fieldname].valid){
+            var parent = $("[name=" + fieldname + "]",validationForm).parents("p:first");
+            parent.append("<span class='star'>*</span>");
+            parent.addClass("invalid");
+            validationSummary.append("<li>"+ result.fields[fieldname].error+"</li>");  
+          }          
+        }
       }     
+    }
+    var processVisibility = function(results){
+      for(var fieldname in results.fields){
+        var item = $("[name=" + fieldname+"]");
+        if(results.fields[fieldname].visible){
+          item.parent().parent().show();
+        }else{
+          item.parent().parent().hide();
+        }
+      }
     }
 
 	  var log =  function (message){
@@ -81,9 +112,10 @@ $(function(){
       };
 	  options.validators = options.validators ? jQuery.extend(validators, options.validators) : validators;
     options.processErrors = options.processErrors ? options.processErrors : processErrors;
+    options.processVisibility = options.processVisibility ? options.processVisibility : processVisibility;
 	  var getForm = function(){
       var form = {};
-      $("[name]",validationForm).not("[disabled]").filter(":visible").each(function(index, item){
+      $("[name]",validationForm).not("[disabled]").each(function(index, item){
         var val = $(this).val();
         var name = item.name;
 
@@ -122,17 +154,15 @@ $(function(){
     var validate = function(e){
 			//get all the field value pairs
       var form = getForm();
-			var errors = validateForm(form, options, fieldsEntered);
-      options.processErrors(errors);    
-      if (errors){
-        
-        return false;
-			}
-      return true;
+			var results = validateForm(form, options, fieldsEntered);      
+      options.processErrors(results, fieldsEntered);    
+      options.processVisibility(results);
+      return results.validForm;
 		};
 		$(this).submit(function(){
       fieldsEntered  = getForm();
-      return validate();
+      //return 
+       validate();
     });
 		if (options.enableBlur){
       var updateFunction = function(){       

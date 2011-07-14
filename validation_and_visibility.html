@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <form method="post" action="index.html" >
+    <form >
         <p>
         <label>Email: <input type="text" name="email" /></label>
         </p>
@@ -30,16 +30,8 @@
         <p>
           <select name="select">
             <option value="">select one...</option>
-            <option>abc</option>
-            <option>def</option>
-          </select>
-        </p>
-
-        <p>
-          <select multiple name="multi">
-            <option>aaa</option>
-            <option>abc</option>
-            <option>def</option>
+            <option>visible</option>
+            <option>invisible</option>
           </select>
         </p>
 
@@ -70,25 +62,12 @@
       validators : {"inncode":function(value){return value.match(/^\d{5}$/);}}, //not required
 
       fields:{
-        "inncode":[{isValid:"required", message:"Inncode is required"},
-                    {isValid:"inncode", message:"Inncode must be 5 digits"}],
-
-        "userName":[{isValid:/^[a-z]{3,}?$/i, message:"UserName must be greater than 3 characters and not include any numbers"},
-                    {isValid:"required", message:"UserName is required"}],
-
-        "email":[{isValid:"required", message:"Email is required"},
-                  {isValid:"email", message:"Email must be valid"}],
-
-        "firstName":[{isValid: "required", message: "First Name is required"},
-                      {isValid:function(value, form){ return value.length < 25; }, message:"First Name must be less than 25 characters"}],
-        
-        "select":[{isValid: "required", message: "Select is required"}],
-
-        "radio":[{isValid: "required", message: "radio is required"}],
-
-        "check":[{isValid: "required", message: "check is required"}],
-
-        "multi":[{isValid: "required", message: "multi is required"}]
+        "inncode":{
+          validations:[
+            {isValid:"required", message:"Inncode is required"}
+           ,{isValid:"inncode", message:"Inncode must be 5 digits"}]
+           ,isVisible:function(form){return form.select === "visible";}
+          }
       }
     };
     $("form").validation(validationOptions);	
