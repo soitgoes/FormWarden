@@ -1,25 +1,32 @@
 var fieldsEntered = {};
 
-$(function(){	
+(function($){	
 	$.fn.validation = function() {
     var validationForm = this;
 
     var processErrors = function(result, fieldsEntered){
-      var validationSummary = $(".validation_summary",validationForm);     
-      validationSummary.html("");
-      $("[name]",validationForm).parents("p").removeClass("invalid");
-      $("span.star").remove();
-      for(var fieldname in result.fields){
-        if (fieldsEntered[fieldname]){
-          if (!result.fields[fieldname].valid){
-            var parent = $("[name=" + fieldname + "]",validationForm).parents("p:first");
-            parent.append("<span class='star'>*</span>");
-            parent.addClass("invalid");
-            validationSummary.append("<li>"+ result.fields[fieldname].error+"</li>");  
-          }          
+        var fieldName, parent, field,
+            validationSummary = $(".validation_summary",validationForm);
+
+        validationSummary.html("");
+        $("[name]",validationForm).parents("p").removeClass("invalid");
+        $("span.star").remove();
+
+        for (fieldName in result.fields) {
+            field = result.fields[fieldName];
+
+            if ( Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false ) {
+
+                parent = $("[name=" + fieldName + "]",validationForm).parents("p:first");
+                parent.append("<span class='star'>*</span>");
+                parent.addClass("invalid");
+
+                validationSummary.append("<li>"+ result.fields[fieldName].error+"</li>");
+            }
+
         }
-      }     
     }
+
     var processVisibility = function(results){
       for(var fieldname in results.fields){
         var item = $("[name=" + fieldname+"]");
@@ -95,8 +102,7 @@ $(function(){
 		};
 		$(this).submit(function(){
       fieldsEntered  = getForm();
-      return 
-       validate();
+      return validate();
     });
 		if (options.enableBlur){
       var updateFunction = function(){       
@@ -111,4 +117,4 @@ $(function(){
 			$("[name]", validationForm).blur(updateFunction);	       
 		}		
 	};	
-});
+})(jQuery);
