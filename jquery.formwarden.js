@@ -7,9 +7,9 @@ var fieldsEntered = {};
         var processErrors = function(result, fieldsEntered){
             var fieldName, parent, field,
                 validationSummary = $(".validation_summary",validationForm);
-
+            var holder = "p,div"
             validationSummary.html("");
-            $("[name]",validationForm).parents("p").removeClass("invalid");
+            $("[name]",validationForm).parent(holder).removeClass("invalid");
             $("span.star").remove();
 
             for (fieldName in result.fields) {
@@ -17,10 +17,9 @@ var fieldsEntered = {};
 
                 if ( Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false ) {
 
-                    parent = $("[name=" + fieldName + "]",validationForm).parents("p:first");
+                    parent = $("[name=" + fieldName + "]",validationForm).parent(holder);
                     parent.append("<span class='star'>*</span>");
                     parent.addClass("invalid");
-
                     validationSummary.append("<li>"+ result.fields[fieldName].error+"</li>");
                 }
 
@@ -123,7 +122,7 @@ var fieldsEntered = {};
             $("[type='checkbox'][name]", validationForm).change(updateFunction);
             $("[name]", validationForm).blur(updateFunction);	       
         }
-
+        fieldsEntered = {};
         validate();	
     };
 })(jQuery);
