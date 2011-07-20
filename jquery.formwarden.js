@@ -28,16 +28,18 @@ var fieldsEntered = {};
     }
 
     var processVisibility = function(results){
-      for(var fieldname in results.fields){
-        var item = $("[name=" + fieldname+"]");
-        if(results.fields[fieldname].visible){
-          item.parent().parent().show();
-          item.removeAttr('disabled');
-        }else{
-          item.parent().parent().hide();
-          item.attr('disabled', 'disabled');
+        var fieldname;
+
+        for (fieldname in results.fields){
+            var item = $("[name=" + fieldname+"]");
+            if(results.fields[fieldname].visible){
+                item.parent('p, div').show();
+                item.removeAttr('disabled');
+            } else {
+                item.parent('p, div').hide();
+                item.attr('disabled', 'disabled');
+            }
         }
-      }
     }
 
 	  var log =  function (message){
@@ -115,6 +117,7 @@ var fieldsEntered = {};
       $("[type='radio'][name]", validationForm).change(updateFunction);
       $("[type='checkbox'][name]", validationForm).change(updateFunction);
 			$("[name]", validationForm).blur(updateFunction);	       
-		}		
+		}	
+        validate();	
 	};	
 })(jQuery);
