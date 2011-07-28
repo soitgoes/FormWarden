@@ -1,0 +1,1 @@
+java -jar ./lib/compiler.jar --compilation_level SIMPLE_OPTIMIZATIONS --js ./jquery.formwarden.js --js_output_file ./jquery.formwarden.min.js
