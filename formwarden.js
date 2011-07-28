@@ -36,7 +36,10 @@ var extend = function(obj) {
 /* End Taken from Underscore.js */
 
 var defaultValidators = {
-  required: function(value){        
+  required: function(value){ 
+		if (value === undefined || value === null) {
+      return true;
+    }	
     return value.length || value !== "";
   },
   email: function(value){return value.match(/\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);},
