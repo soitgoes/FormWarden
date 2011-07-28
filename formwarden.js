@@ -1,6 +1,6 @@
-
-var nativeForEach = Array.prototype.forEach;
-var slice         = Array.prototype.slice;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var nativeForEach  = Array.prototype.forEach;
+var slice          = Array.prototype.slice;
 
 /* Taken from Underscore.js */
 
@@ -37,7 +37,7 @@ var extend = function(obj) {
 
 var defaultValidators = {
   required: function(value){        
-    return value.length || value !== "";
+    return value.length || (value !== "");
   },
   email: function(value){return value.match(/\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);},
   ssn: function(value){return value.match(/\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b/);},
@@ -86,22 +86,33 @@ var isVisibleField = function(form, fieldOptions){
 }
 //if server side don't bother suppling fieldsEntered
 var validateForm= function(form, validationOptions){
-  var fields = {};
-  var validForm = true;
-  for (var key in form){
-    if (validationOptions.fields[key]){     
-      var field =  validationOptions.fields[key];
-      var visible = isVisibleField(form, field);
-      var mesg = isInvalidField(form, key, field, extend(defaultValidators, validationOptions.validators));
-      var valid = (!visible) || (visible && mesg === "");
-      validForm &= valid;
-      var result ={visible: visible, error: mesg, valid: !!valid};
-      if (result){
-        fields[key] =  result;  
-      }  
-    }else{
-      fields[key] = {visible: true, error:"", valid:true};
-    }   
-  }
-  return {fields:fields, validForm:!!validForm};  
+    var fields = {};
+    var validForm = true;
+
+    each(validationOptions.fields, function(val, key) {
+        var visible = isVisibleField(form, val),
+            mesg    = isInvalidField(form, key, val, extend(defaultValidators, validationOptions.validators || {})),
+            valid   = (!visible) || (visible && mesg === ""),
+            result;
+        
+        validForm &= valid;
+
+        result = { visible: visible, error: mesg, valid: !!valid };
+
+        if (result) {
+            fields[key] = result;
+        }
+    });
+
+    each(form, function(val, key) {
+        // Form fields that have no validators are visible and valid
+        if (!hasOwnProperty.call(fields, key)) {
+            fields[key] = { visible: true, error: "", valid: true };
+        }
+    });
+
+    return {
+        fields:    fields,
+        validForm: !!validForm
+    };
 }
