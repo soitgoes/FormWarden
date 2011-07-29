@@ -74,7 +74,14 @@ var isInvalidField = function (form, key, fieldOptions, validators){
         var validFx = validators[validation.isValid];
         if (validFx){
           if (!validFx(value, form, validation)){
+            if (validation.invalid){
+              validation.invalid(); 
+            }
             return validation.message || key + " is invalid";
+          }else{
+            if (validation.valid){
+              validation.valid();
+            }
           }
         }else{
           alert("Validation Function not found: " + validation.isValid)
