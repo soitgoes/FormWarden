@@ -45,7 +45,9 @@ var defaultValidators = {
   email: function(value){return value.match(/\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);},
   ssn: function(value){return value.match(/\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b/);},
   date: function(value){return value.match(/(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)[0-9]{2}/);},
-  iso8601: function(value){return value.match(/^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/);}
+  iso8601: function(value){return value.match(/^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/);},
+  maxLength: function(value, form, validation){return value.length < validation.length;},
+  minLength: function(value,form, validation){return value.length > validation.length;}
 };
 
 var isInvalidField = function (form, key, fieldOptions, validators){
@@ -71,7 +73,7 @@ var isInvalidField = function (form, key, fieldOptions, validators){
      }else{
         var validFx = validators[validation.isValid];
         if (validFx){
-          if (!validFx(value, form)){
+          if (!validFx(value, form, validation)){
             return validation.message || key + " is invalid";
           }
         }else{

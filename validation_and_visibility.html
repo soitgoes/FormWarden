@@ -66,9 +66,15 @@
         "inncode":{
           validations:[
             {isValid:"required", message:"Inncode is required"}
-           ,{isValid:"inncode", message:"Inncode must be 5 digits"}]
+           ,{isValid:"inncode", message:"Inncode must be 5 digits"}
+           ]
            ,isVisible:function(form){return form.select === "visible";}
-          }
+          },
+        "firstName":{
+          validations:[
+            {isValid:"maxLength", length:25, message:"First Name may not exceed 25 characters"}
+          ]
+        }
       }
     };
     $("form").validation(validationOptions);	
