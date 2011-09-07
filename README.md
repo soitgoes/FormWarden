@@ -1,7 +1,3 @@
-See index.html for an example of usage.  Documentation coming soon.
-
-
-
 # Features
 
 Currently Form Warden does all these things.
