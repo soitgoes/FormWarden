@@ -1,15 +1,40 @@
 See index.html for an example of usage.  Documentation coming soon.
 
-The mission of jQuery Form Warden are as follows:
+
 
 # Features
+
+Currently Form Warden does all these things.
 
 * Decoupled form validation from the UI library
 * Allows easy overriding of processErrors
 * Regex support
 * Work in all browsers >IE6, FF, Chrome, Safari
 
-Currently Form Warden does all these things.
+# Example
+
+Add your script references
+    <script src="jquery-1.6.1.min.js" type="text/javascript"></script>
+    <script src="jquery.formwarden.min.js" type="text/javascript"></script> <!--Contains jquery.formwarden and formwarden //-->
+
+    <script>
+        $(function(){
+         var validationOptions= 
+            {
+              fields:{
+
+                "email":[{isValid:"required", message:"Email is required"},
+                          {isValid:"email", message:"Email must be valid"}],
+
+                "firstName":[{isValid: "required", message: "First Name is required"},
+                              {isValid:function(value, form){ return value.length < 25; }, message:"First Name must be less than 25 characters"}],
+              }
+            };
+        $("form").validation(validationOptions);
+      });
+    </script>
+
+For more advanced examples, such as defining your own validator or overriding the processErrors behavor check out validation_only.html and validation_and_visibility.html.
 
 The MIT License (MIT)
 Copyright (c) 2011 Whiteboard-IT, LCC
