@@ -42,10 +42,10 @@ var fieldsEntered = {};
                 for (fieldname in results.fields) {
                     var item = $("[name=" + fieldname + "]");
                     if (results.fields[fieldname].visible) {
-                        item.parent('p, div').show();
+                        item.parent('p, div, label').show();
                         item.removeAttr('disabled');
                     } else {
-                        item.parent('p, div').hide();
+                        item.parent('p, div, label').hide();
                         item.attr('disabled', 'disabled');
                     }
                 }
