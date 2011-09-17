@@ -93,7 +93,6 @@ var fieldsEntered = {};
                             }).toArray();
                         }
                     }
-
                     if (item.type == "select-multiple") {
                         els = $("[name=" + name + "] option:selected");
                         if (els.length === 0) {
@@ -102,9 +101,18 @@ var fieldsEntered = {};
                             val = els.map(function() {
                                 return this.value;
                             }).toArray();
-                        }
+                        }												
                     }
-
+										if (item.type == "select-one") {
+                        els = $("[name=" + name + "] option:selected");
+                        if (els.length === 0) {
+                            val = "";
+                        } else {
+                            val = els.map(function() {
+                                return this.value;
+                            }).toArray()[0];
+                        }												
+                    }
                     form[item.name] = val;
                 });
 
