@@ -5,7 +5,7 @@
     <script src="formwarden.js" type="text/javascript"></script>
     <script src="jquery.formwarden.js" type="text/javascript"></script>
     <style>
-        .invalid input{
+        .invalid input, .invalid select, .invalid textarea{
           border:solid 2px #f00;
         }
         .invalid{
@@ -53,7 +53,10 @@
           <input type="checkbox" name="check" value="1" /> Choice A
           <input type="checkbox" name="check" value="2" /> Choice B
         </p>
-
+				<p>
+					<textarea name="textarea">					
+					</textarea>
+				</p>
         <ul class="validation_summary">
         </ul>
         <input id="submit_button" type="submit" value="Go" name="submit_button"/>
@@ -98,7 +101,8 @@
 
         "check":[{isValid: "required", message: "check is required"}],
 
-        "multi":[{isValid: "required", message: "multi is required"}]
+        "multi":[{isValid: "required", message: "multi is required"}],
+				"textarea":[{isValid: "required", message: "textarea is required"}]
       }
     };
     $("form").validation(validationOptions);	
