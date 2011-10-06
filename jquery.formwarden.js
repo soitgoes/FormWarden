@@ -25,7 +25,7 @@ var fieldsEntered = {};
                     field = result.fields[fieldName];
 
                     if (Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false) {
-                        var curField = $("[name=" + fieldName + "]", validationForm);
+                        var curField = $("[name='" + fieldName + "']", validationForm);
                         parent = curField.parent();
                         //parent.append("<strong class='star'>*</strong>");
                         curField.attr("title", result.fields[fieldName].error.replace("*", ""));
@@ -40,7 +40,7 @@ var fieldsEntered = {};
                 var fieldname;
 
                 for (fieldname in results.fields) {
-                    var item = $("[name=" + fieldname + "]");
+                    var item = $("[name='" + fieldname + "']");
                     if (results.fields[fieldname].visible) {
                         item.parent('p, div, label').show();
                         item.removeAttr('disabled');
@@ -84,7 +84,7 @@ var fieldsEntered = {};
                     }
 
                     if (item.type == "checkbox") {
-                        els = $("[name=" + name + "]:checked");
+                        els = $("[name='" + name + "']:checked");
                         if (els.length === 0) {
                             val = "";
                         } else {
@@ -94,7 +94,7 @@ var fieldsEntered = {};
                         }
                     }
                     if (item.type == "select-multiple") {
-                        els = $("[name=" + name + "] option:selected");
+                        els = $("[name='" + name + "'] option:selected");
                         if (els.length === 0) {
                             val = "";
                         } else {
@@ -104,7 +104,7 @@ var fieldsEntered = {};
                         }												
                     }
 										if (item.type == "select-one") {
-                        els = $("[name=" + name + "] option:selected");
+                        els = $("[name='" + name + "'] option:selected");
                         if (els.length === 0) {
                             val = "";
                         } else {
