@@ -5,7 +5,7 @@
     "keywords": ["form", "warden", "validation"],
     "author": "Martin Murphy",
     "email": "martin.murphy@whiteboard-it.com",
-    "main": "./lib/bogart",
+    "main": "./formwarden.js",
     "directories": { "lib": "./lib" },
     "bugs": {
       "url": "https://github.com/soitgoes/JQuery-Form-Warden/issues",
