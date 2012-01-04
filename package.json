@@ -1,0 +1,14 @@
+{
+    "name": "form-warden",
+    "description": "Validation Framework for both server and client side validation in nodejs and clientside browser",
+    "version": "1.0.0",
+    "keywords": ["form", "warden", "validation"],
+    "author": "Martin Murphy",
+    "email": "martin.murphy@whiteboard-it.com",
+    "main": "./formwarden.js",
+    "directories": { "lib": "./lib" },
+    "bugs": {
+      "url": "https://github.com/soitgoes/JQuery-Form-Warden/issues",
+      "email": "martin.murphy@whiteboard-it.com"
+    }
+}

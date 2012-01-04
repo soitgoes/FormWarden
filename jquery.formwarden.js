@@ -12,11 +12,25 @@ var fieldsEntered = {};
             return;
         }
 
+        var log = function(message) {
+                if (console && console.log) {
+                    console.log(message);
+                }
+            };
+
+        var options = arguments[0] ? jQuery.extend({
+            enableBlur: true
+        }, arguments[0]) : {};
+
         var validationForm = this;
 
         var processErrors = function(result, fieldsEntered) {
-                var fieldName, parent, field, validationSummary = $(".validation_summary", validationForm);
-                var holder = "p,div"
+                var fieldName, 
+                    parent, 
+                    field, 
+                    holder = "p,div",
+                    validationSummary = options.validationSummary ? $(options.validationSummary) : $(".validation_summary", validationForm);
+                
                 validationSummary.html("");
                 $("[name]", validationForm).parent().removeClass("invalid");
                 $(".star").remove();
@@ -51,15 +65,6 @@ var fieldsEntered = {};
                 }
             }
 
-        var log = function(message) {
-                if (console && console.log) {
-                    console.log(message);
-                }
-            };
-
-        var options = arguments[0] ? jQuery.extend({
-            enableBlur: true
-        }, arguments[0]) : {};
 
         if (this[0].tagName !== "FORM") {
             alert("must be a form element");
@@ -101,9 +106,9 @@ var fieldsEntered = {};
                             val = els.map(function() {
                                 return this.value;
                             }).toArray();
-                        }												
+                        }
                     }
-										if (item.type == "select-one") {
+                    if (item.type == "select-one") {
                         els = $("[name='" + name + "'] option:selected");
                         if (els.length === 0) {
                             val = "";
@@ -111,7 +116,7 @@ var fieldsEntered = {};
                             val = els.map(function() {
                                 return this.value;
                             }).toArray()[0];
-                        }												
+                        }
                     }
                     form[item.name] = val;
                 });
@@ -138,7 +143,7 @@ var fieldsEntered = {};
                 if (typeof $(this).data('invalid') === 'function') {
                     $(this).data('invalid')(e);
                 }
-                
+
                 return false;
             }
 
