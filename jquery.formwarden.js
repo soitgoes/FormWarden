@@ -161,7 +161,14 @@ var fieldsEntered = {};
             $("select[name]", validationForm).change(updateFunction);
             $("select multiple[name]", validationForm).change(updateFunction);
             $("[type='radio'][name]", validationForm).change(updateFunction);
-            $("[type='checkbox'][name]", validationForm).change(updateFunction);
+            $("[type='checkbox'][name]", validationForm).click(function(){
+                if (this.checked){
+                    $(this).attr('checked', 'checked');  
+                }else{
+                    $(this).removeAttr('checked')
+                }
+                updateFunction;
+            });
             $("[name]", validationForm).blur(updateFunction);
         }
         fieldsEntered = {};
