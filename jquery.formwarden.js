@@ -122,7 +122,7 @@ var fieldsEntered = {};
         var validate = function(e) {
                 //get all the field value pairs
                 var form = getForm();
-                var results = validateForm(form, options, fieldsEntered);
+                var results = fw.validateForm(form, options, fieldsEntered);
                 options.processErrors(results, fieldsEntered);
                 options.processVisibility(results);
 

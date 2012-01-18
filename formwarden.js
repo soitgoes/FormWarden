@@ -1,3 +1,26 @@
+
+(function (definition) {
+
+    // This file will function properly as a <script> tag, or a module
+    // using CommonJS and NodeJS or RequireJS module formats.  In
+    // Common/Node/RequireJS, the module exports the Q API and when
+    // executed as a simple <script>, it creates a Q global instead.
+
+    // RequireJS
+    if (typeof define === "function") {
+        define(definition);
+    // CommonJS
+    } else if (typeof exports === "object") {
+        definition(require, exports);
+    // <script>
+    } else {
+        definition(void 0, fw = {});
+    }
+
+})(function (serverSideRequire, exports) {
+"use strict";
+
+
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var nativeForEach  = Array.prototype.forEach;
 var slice          = Array.prototype.slice;
@@ -109,7 +132,7 @@ var isVisibleField = function(form, fieldOptions){
   return true;
 }
 //if server side don't bother suppling fieldsEntered
-var validateForm= function(form, validationOptions){
+exports.validateForm= function(form, validationOptions){
     var fields = {};
     var validForm = true;
 
@@ -140,3 +163,5 @@ var validateForm= function(form, validationOptions){
         validForm: !!validForm
     };
 }
+
+});
