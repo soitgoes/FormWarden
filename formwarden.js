@@ -119,7 +119,7 @@ var isInvalidField = function (form, key, fieldOptions, validators){
             }
           }
         }else{
-          alert("Validation Function not found: " + validation.isValid)
+          console.log("Validation Function not found: " + validation.isValid)
         }
      }
    }
