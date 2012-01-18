@@ -12,11 +12,25 @@ var fieldsEntered = {};
             return;
         }
 
+        var log = function(message) {
+                if (console && console.log) {
+                    console.log(message);
+                }
+            };
+
+        var options = arguments[0] ? jQuery.extend({
+            enableBlur: true
+        }, arguments[0]) : {};
+
         var validationForm = this;
 
         var processErrors = function(result, fieldsEntered) {
-                var fieldName, parent, field, validationSummary = $(".validation_summary", validationForm);
-                var holder = "p,div"
+                var fieldName, 
+                    parent, 
+                    field, 
+                    holder = "p,div",
+                    validationSummary = options.validationSummary ? $(options.validationSummary) : $(".validation_summary", validationForm);
+                
                 validationSummary.html("");
                 $("[name]", validationForm).parent().removeClass("invalid");
                 $(".star").remove();
@@ -25,7 +39,7 @@ var fieldsEntered = {};
                     field = result.fields[fieldName];
 
                     if (Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false) {
-                        var curField = $("[name=" + fieldName + "]", validationForm);
+                        var curField = $("[name='" + fieldName + "']", validationForm);
                         parent = curField.parent();
                         //parent.append("<strong class='star'>*</strong>");
                         curField.attr("title", result.fields[fieldName].error.replace("*", ""));
@@ -40,7 +54,7 @@ var fieldsEntered = {};
                 var fieldname;
 
                 for (fieldname in results.fields) {
-                    var item = $("[name=" + fieldname + "]");
+                    var item = $("[name='" + fieldname + "']");
                     if (results.fields[fieldname].visible) {
                         item.parent('p, div, label').show();
                         item.removeAttr('disabled');
@@ -51,15 +65,6 @@ var fieldsEntered = {};
                 }
             }
 
-        var log = function(message) {
-                if (console && console.log) {
-                    console.log(message);
-                }
-            };
-
-        var options = arguments[0] ? jQuery.extend({
-            enableBlur: true
-        }, arguments[0]) : {};
 
         if (this[0].tagName !== "FORM") {
             alert("must be a form element");
@@ -84,7 +89,7 @@ var fieldsEntered = {};
                     }
 
                     if (item.type == "checkbox") {
-                        els = $("[name=" + name + "]:checked");
+                        els = $("[name='" + name + "']:checked");
                         if (els.length === 0) {
                             val = "";
                         } else {
@@ -94,24 +99,24 @@ var fieldsEntered = {};
                         }
                     }
                     if (item.type == "select-multiple") {
-                        els = $("[name=" + name + "] option:selected");
+                        els = $("[name='" + name + "'] option:selected");
                         if (els.length === 0) {
                             val = "";
                         } else {
                             val = els.map(function() {
                                 return this.value;
                             }).toArray();
-                        }												
+                        }
                     }
-										if (item.type == "select-one") {
-                        els = $("[name=" + name + "] option:selected");
+                    if (item.type == "select-one") {
+                        els = $("[name='" + name + "'] option:selected");
                         if (els.length === 0) {
                             val = "";
                         } else {
                             val = els.map(function() {
                                 return this.value;
                             }).toArray()[0];
-                        }												
+                        }
                     }
                     form[item.name] = val;
                 });
@@ -138,7 +143,7 @@ var fieldsEntered = {};
                 if (typeof $(this).data('invalid') === 'function') {
                     $(this).data('invalid')(e);
                 }
-                
+
                 return false;
             }
 
@@ -156,7 +161,14 @@ var fieldsEntered = {};
             $("select[name]", validationForm).change(updateFunction);
             $("select multiple[name]", validationForm).change(updateFunction);
             $("[type='radio'][name]", validationForm).change(updateFunction);
-            $("[type='checkbox'][name]", validationForm).change(updateFunction);
+            $("[type='checkbox'][name]", validationForm).click(function(){
+                if (this.checked){
+                    $(this).attr('checked', 'checked');  
+                }else{
+                    $(this).removeAttr('checked')
+                }
+                updateFunction;
+            });
             $("[name]", validationForm).blur(updateFunction);
         }
         fieldsEntered = {};
