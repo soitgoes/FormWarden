@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FormWarden</id>
+    <version>2.0.0</version>
+    <authors>Martin Murphy</authors>
+    <owners>Martin Murphy</owners>
+    <licenseUrl>https://github.com/soitgoes/FormWarden</licenseUrl>
+    <projectUrl>https://github.com/soitgoes/FormWarden</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A library to assist with complex and interactive form validation.</description>
+    <releaseNotes>Mature Forms Validation library debuts on nuget</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>Form Validation HTML JQuery</tags>
+  </metadata>
+</package>
