@@ -97,14 +97,15 @@ var defaultValidators = {
 	}
 };
 
-var isInvalidField = function (form, key, fieldOptions, validators){
+var isInvalidField = function (form, key, fieldOptions, validators, conventionBased){
    if (!fieldOptions){
      return true;
    }
    var value = form[key];
-   var checkVisibility  = fieldOptions.push ? false : true; //if there is 
+   var checkVisibility  = fieldOptions.push ? false : true;
       //if there is not a visibility function or it is true then execute the validation
    var validations = checkVisibility  ? fieldOptions.validations : fieldOptions;
+
    for (var i = 0; i < validations.length; i++)
    {
     var validation = validations[i];
@@ -134,7 +135,7 @@ var isInvalidField = function (form, key, fieldOptions, validators){
           console.log("Validation Function not found: " + validation.isValid)
         }
      }
-   }
+   } 
    return "";
 }
 var isVisibleField = function(form, fieldOptions){
@@ -147,10 +148,11 @@ var isVisibleField = function(form, fieldOptions){
 exports.validateForm= function(form, validationOptions){
     var fields = {};
     var validForm = true;
+    var validators = extend(defaultValidators, validationOptions.validators || {});
 
     each(validationOptions.fields, function(val, key) {
         var visible = isVisibleField(form, val),
-            mesg    = isInvalidField(form, key, val, extend(defaultValidators, validationOptions.validators || {})),
+            mesg    = isInvalidField(form, key, val, validators, validationOptions.conventionBased),
             valid   = (!visible) || (visible && mesg === ""),
             result;
         
@@ -165,6 +167,19 @@ exports.validateForm= function(form, validationOptions){
 
     each(form, function(val, key) {
         // Form fields that have no validators are visible and valid
+        if (validationOptions.conventionBased){
+        //loop through all of the validators if any of them partial match then execute them and return
+          if (val !=""){
+            for (var vkey in validators){
+              if (key.indexOf(vkey) > -1){
+                var valid = !!validators[vkey](val, form);
+                var mesg = valid ? "" : validators[vkey].message || key + " is invalid";
+                fields[key] = {visible:true, error: mesg, valid: valid} ;
+                validForm &= valid;
+              }
+            }
+          }
+        }
         if (!hasOwnProperty.call(fields, key)) {
             fields[key] = { visible: true, error: "", valid: true };
         }
