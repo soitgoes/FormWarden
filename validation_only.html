@@ -80,6 +80,9 @@
       //provide custom validators if desired
       //specify the validation summary container to use
       // validationSummary: ".validation_summary" ,
+      before: function(form){ console.log(form)},
+      after: function(results){console.log(results)},
+
       validators : {"inncode":function(value){return value.match(/^\d{5}$/);}}, //not required
 
       fields:{

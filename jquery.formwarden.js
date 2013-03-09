@@ -127,9 +127,15 @@ var fieldsEntered = {};
         var validate = function(e) {
                 //get all the field value pairs
                 var form = getForm();
+                if (options.before){
+                    options.before(form);
+                }
                 var results = fw.validateForm(form, options, fieldsEntered);
                 options.processErrors(results, fieldsEntered);
                 options.processVisibility(results);
+                if (options.after){
+                    options.after(results);
+                }
 
                 return results.validForm;
             };
