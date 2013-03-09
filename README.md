@@ -12,7 +12,7 @@ Currently Form Warden does all these things.
 Add your script references
 
     <script src="jquery-1.6.1.min.js" type="text/javascript"></script>
-    <script src="jquery.formwarden.min.js" type="text/javascript"></script>
+    <script src="jquery.formwarden-pack.min.js" type="text/javascript"></script>
 
 Place an additional script tag just inside of the close body tag.
 
