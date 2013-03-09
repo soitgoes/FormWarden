@@ -178,6 +178,5 @@ var fieldsEntered = {};
             $("[name]", validationForm).blur(updateFunction);
         }
         fieldsEntered = {};
-        validate();
     };
 })(jQuery);
