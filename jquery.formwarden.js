@@ -29,7 +29,7 @@ var fieldsEntered = {};
                     parent, 
                     field, 
                     holder = "p,div",
-                    validationSummary = options.validationSummary ? $(options.validationSummary) : $(".validation_summary", validationForm);
+                    validationSummary = options.validationSummary ? $(options.validationSummary) : $(".validation_summary");
                 
                 validationSummary.html("");
                 $("[name]", validationForm).parent().removeClass("invalid");
