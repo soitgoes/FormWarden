@@ -173,7 +173,7 @@ var fieldsEntered = {};
                 }else{
                     $(this).removeAttr('checked')
                 }
-                updateFunction;
+                updateFunction();
             });
             $("[name]", validationForm).blur(updateFunction);
         }
