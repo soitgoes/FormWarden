@@ -134,7 +134,7 @@ var fieldsEntered = {};
                 options.processErrors(results, fieldsEntered);
                 options.processVisibility(results);
                 if (options.after){
-                    options.after(results);
+                    options.after(results.validForm, results);
                 }
 
                 return results.validForm;
