@@ -118,6 +118,9 @@ var fieldsEntered = {};
                             }).toArray()[0];
                         }
                     }
+                    if (item.tagName == "TEXTAREA") {
+                        val = item.value;
+                    }
                     form[item.name] = val;
                 });
 
