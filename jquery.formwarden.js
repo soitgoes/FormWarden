@@ -38,7 +38,7 @@ var fieldsEntered = {};
                 for (fieldName in result.fields) {
                     field = result.fields[fieldName];
 
-                    if (Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false) {
+                    if (fieldsEntered && Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false) {
                         var curField = $("[name='" + fieldName + "']", validationForm);
                         parent = curField.parent();
                         //parent.append("<strong class='star'>*</strong>");
