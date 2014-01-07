@@ -67,7 +67,7 @@ var fieldsEntered = {};
 
 
         if (this[0].tagName !== "FORM") {
-            alert("must be a form element");
+            console.error("FormsWarden:: Selector must be a form element");
             return;
         }
 
