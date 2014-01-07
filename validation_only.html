@@ -107,6 +107,9 @@
         "multi":[{isValid: "required", message: "multi is required"}],
 				"textarea":[{isValid: "required", message: "textarea is required"}]
       }
+      ,beforeSubmit: function(){
+         return confirm("Everything is valid proceed with submit?");
+      }
     };
     $("form").validation(validationOptions);	
   });

@@ -152,9 +152,15 @@ var fieldsEntered = {};
 
                 return false;
             }
-
             if (typeof $(this).data('valid') === 'function') {
                 $(this).data('valid')(e);
+            }
+            if (options.beforeSubmit){
+                var result = options.beforeSubmit();
+                if (result !== undefined && !result){
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
             }
         });
 
