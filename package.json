@@ -6,7 +6,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/soitgoes/FormWarden.git"
-    }
+    },
     "author": "Martin Murphy",
     "email": "martin.murphy@whiteboard-it.com",
     "main": "./formwarden.js",
