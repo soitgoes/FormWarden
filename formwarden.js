@@ -20,6 +20,8 @@
 })(function (serverSideRequire, exports) {
 "use strict";
 
+var path = !serverSideRequire ? null : serverSideRequire('path'),
+  fs = !serverSideRequire ? null : serverSideRequire('fs');
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var nativeForEach  = Array.prototype.forEach;
@@ -189,6 +191,24 @@ exports.validateForm= function(form, validationOptions){
         fields:    fields,
         validForm: !!validForm
     };
+}
+
+exports.getFormWardenScriptContents = function () {
+  if (!path || !fs) {
+    console.log('This is not supported as a client side function.')
+    return;
+  }
+  var formWardenFilePath = path.join(__dirname, 'formwarden.js');
+  return fs.readFileSync(formWardenFilePath, 'utf8')
+}
+
+exports.getJqueryFormWardenScriptContents = function () {
+  if (!path || !fs) {
+    console.log('This is not supported as a client side function.')
+    return;
+  }
+  var jqueryFormWardenFilePath = path.join(__dirname, 'jquery.formwarden.js');
+  return fs.readFileSync(jqueryFormWardenFilePath, 'utf8')
 }
 
 });
