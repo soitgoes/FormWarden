@@ -118,7 +118,16 @@ var fieldsEntered = {};
                             }).toArray()[0];
                         }
                     }
-                    form[item.name] = val;
+		    if (form[item.name]){
+                      if (form.push){
+			form.push(val);
+                      }else{
+			form[item.name] = [form[item.name]];
+                        form[item.name].push(val);
+		      }
+                    }else{
+		      form[item.name] = val;
+                    }
                 });
 
                 return form;

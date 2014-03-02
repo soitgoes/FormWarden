@@ -53,6 +53,11 @@
           <input type="checkbox" name="check" value="1" /> Choice A
           <input type="checkbox" name="check" value="2" /> Choice B
         </p>
+	<p>
+	<label>Number of Things</label>
+	  <input type="text" name="numOfThings" />
+	  <input type="text" name="numOfThings" value="" />
+	</p>
 				<p>
 					<textarea name="textarea"></textarea>
 				</p>
@@ -94,7 +99,7 @@
 
         "email":[{isValid:"required", message:"Email is required"},
                   {isValid:"email", message:"Email must be valid"}],
-
+	"numOfThings":[{isValid:"required", message:"Number of Things is required"}],
         "firstName":[{isValid: "required", message: "First Name is required"},
                       {isValid:function(value, form){ return value.length < 25; }, message:"First Name must be less than 25 characters"}],
         
