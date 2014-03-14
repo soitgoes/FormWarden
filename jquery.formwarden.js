@@ -19,7 +19,8 @@ var fieldsEntered = {};
             };
 
         var options = arguments[0] ? jQuery.extend({
-            enableBlur: true
+            enableBlur: true,
+			invalidClass: "invalid"
         }, arguments[0]) : {};
 
         var validationForm = this;
@@ -32,7 +33,7 @@ var fieldsEntered = {};
                     validationSummary = options.validationSummary ? $(options.validationSummary) : $(".validation_summary");
                 
                 validationSummary.html("");
-                $("[name]", validationForm).parent().removeClass("invalid");
+                $("[name]", validationForm).parent().removeClass(options.invalidClass);
                 $(".star").remove();
 
                 for (fieldName in result.fields) {
@@ -43,7 +44,7 @@ var fieldsEntered = {};
                         parent = curField.parent();
                         //parent.append("<strong class='star'>*</strong>");
                         curField.attr("title", result.fields[fieldName].error.replace("*", ""));
-                        parent.addClass("invalid");
+                        parent.addClass(options.invalidClass);
                         validationSummary.append("<li>" + result.fields[fieldName].error.replace("*", "") + "</li>");
                     }
 
