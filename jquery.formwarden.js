@@ -20,7 +20,7 @@ var fieldsEntered = {};
 
         var options = arguments[0] ? jQuery.extend({
             enableBlur: true,
-			invalidClass: "invalid"
+            invalidClass: "invalid"
         }, arguments[0]) : {};
 
         var validationForm = this;
@@ -84,19 +84,14 @@ var fieldsEntered = {};
                     var els;
 
                     if (item.type == "radio") {
-                        if ($("[name='" + name + "']:checked").length === 0) {
+                        if (!$(item).prop('checked')) {
                             val = "";
                         }
                     }
 
                     if (item.type == "checkbox") {
-                        els = $("[name='" + name + "']:checked");
-                        if (els.length === 0) {
+                        if (!$(item).prop('checked')) {
                             val = "";
-                        } else {
-                            val = els.map(function() {
-                                return this.value;
-                            }).toArray();
                         }
                     }
                     if (item.type == "select-multiple") {
@@ -119,15 +114,19 @@ var fieldsEntered = {};
                             }).toArray()[0];
                         }
                     }
-		    if (form[item.name]){
+            if (form[item.name]){
                       if (form.push){
-			form.push(val);
+            if (val) {
+                          form.push(val);
+                        }
                       }else{
-			form[item.name] = [form[item.name]];
-                        form[item.name].push(val);
-		      }
+                        if (val) {
+              form[item.name] = [form[item.name]];
+                          form[item.name].push(val);
+                        }
+              }
                     }else{
-		      form[item.name] = val;
+              form[item.name] = val;
                     }
                 });
 
