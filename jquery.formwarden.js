@@ -176,7 +176,7 @@ var fieldsEntered = {};
         if (options.enableBlur) {
             var updateFunction = function() {
                     fieldsEntered[this.name] = true;
-                    return validate();
+                    validate();
                 };
 
             $("select[name]", validationForm).change(updateFunction);
