@@ -212,7 +212,9 @@ var fieldsEntered = {};
         }
         updateFunction();
       });
-      $("[name]", validationForm).blur(updateFunction);
+      $("[name]", validationForm).blur(function(){
+        setTimeout(updateFunction.bind(this),300); //in order to accomodate date picker weirdness
+      });
     }
     fieldsEntered = {};
   };
