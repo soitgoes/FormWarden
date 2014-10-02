@@ -1,7 +1,7 @@
 {
   "name": "form-warden",
   "description": "Validation Framework for both server and client side validation in nodejs and clientside browser",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "keywords": [
     "form",
     "warden",
