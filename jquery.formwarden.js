@@ -105,9 +105,10 @@ var fieldsEntered = {};
         var els;
 
         if (item.type == "radio") {
-          val = $(this).fieldValue()[0];
           if ($("[name='" + name + "']:checked").length === 0) {
             val = "";
+          }else{
+            val = $(this).fieldValue()[0];
           }
         }
 
