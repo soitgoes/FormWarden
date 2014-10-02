@@ -108,7 +108,7 @@ var fieldsEntered = {};
           if ($("[name='" + name + "']:checked").length === 0) {
             val = "";
           }else{
-            val = $(this).fieldValue()[0];
+            val = $(this).val();
           }
         }
 
