@@ -78,11 +78,13 @@
       }
       return true;
     },
-    date: function (value) {
-      if (value) {
+    date: function(value){
+     if(value){
+        if (moment){
+          return moment(value).isValid()
+        }
         return value.match(/(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)[0-9]{2}/);
-      }
-      return true;
+     }
     },
     iso8601: function (value) {
       if (value) {
