@@ -105,7 +105,7 @@ var fieldsEntered = {};
         var els;
 
         if (item.type == "radio") {
-          if ($("[name='" + name + "']:checked").length === 0) {
+          if (!item.checked) {
             val = "";
           }else{
             val = $(this).val();
@@ -142,10 +142,10 @@ var fieldsEntered = {};
             }).toArray()[0];
           }
         }
-        if (form[item.name]) {
-          if (form.push) {
+        if (form[item.name] && val) {
+          if (form.push && val) {
             form.push(val);
-          } else {
+          } else if (val){
             form[item.name] = [form[item.name]];
             form[item.name].push(val);
           }
