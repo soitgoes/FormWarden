@@ -106,7 +106,7 @@ var fieldsEntered = {};
 
         if (item.type == "radio") {
           if (!item.checked) {
-            val = "";
+            val = undefined;
           }else{
             val = $(this).val();
           }
@@ -142,15 +142,16 @@ var fieldsEntered = {};
             }).toArray()[0];
           }
         }
-        if (form[item.name] && val) {
-          if (form.push && val) {
-            form.push(val);
-          } else if (val){
-            form[item.name] = [form[item.name]];
-            form[item.name].push(val);
-          }
-        } else {
-          form[item.name] = val;
+        if (val !== undefined){
+          if (form[item.name] && val && !val.push) {
+            if (form[item.name].push && val) {
+              form[item.name].push(val);
+            } else if (val){
+              form[item.name] = [val];
+            }
+          }else{
+            form[item.name] = val;
+          }  
         }
       });
 
