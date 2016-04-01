@@ -70,13 +70,13 @@
       if (value) {
         return value.match(/\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i);
       }
-      return false;
+      return true;
     },
     ssn: function (value) {
       if (value) {
         return value.match(/\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b/);
       }
-      return false;
+      return true;
     },
     date: function(value){
      if(value){
@@ -85,7 +85,7 @@
         }
         return value.match(/(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)[0-9]{2}/);
      }
-      return false;
+      return true;
     },
     iso8601: function (value) {
       if (value) {
