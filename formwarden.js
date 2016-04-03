@@ -62,7 +62,7 @@
   var defaultValidators = {
     required: function (value) {
       if (value === undefined || value === null) {
-        return true;
+        return false;
       }
       return value.length || value !== "";
     },
@@ -85,24 +85,25 @@
         }
         return value.match(/(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)[0-9]{2}/);
      }
+      return true;
     },
     iso8601: function (value) {
       if (value) {
         return value.match(/^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/);
       }
-      return true;
+      return isBeforeContentEditableFalse;
     },
     maxLength: function (value, form, validation) {
       if (value) {
         return value.length <= validation.length;
       }
-      return true;
+      return false;
     },
     minLength: function (value, form, validation) {
       if (value) {
         return value.length >= validation.length;
       }
-      return true;
+      return false;
     }
   };
 

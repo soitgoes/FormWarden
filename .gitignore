@@ -1,2 +1,3 @@
 ﻿build/*.nupkg
 *.nupkg
+.idea/
