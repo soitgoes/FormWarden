@@ -46,7 +46,7 @@ var fieldsEntered = {};
 
     var validationForm = this;
 
-    var processErrors = function (result, fieldsEntered) {
+    var processErrors = function (result, fieldsEntered, submission) {
       var fieldName,
         parent,
         field,
@@ -60,7 +60,7 @@ var fieldsEntered = {};
       for (fieldName in result.fields) {
         field = result.fields[fieldName];
 
-        if (fieldsEntered && Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName) && field.valid === false) {
+         if ((submission || fieldsEntered && Object.prototype.hasOwnProperty.call(fieldsEntered, fieldName)) && field.valid === false) {
           var curField = $("[name='" + fieldName + "']", validationForm);
           parent = curField.parent();
           //parent.append("<strong class='star'>*</strong>");
@@ -158,14 +158,15 @@ var fieldsEntered = {};
       return form;
     };
 
-    var validate = function (e) {
+    var validate = function (submission) {
       //get all the field value pairs
       var form = getForm();
       if (options.before) {
         options.before(form);
       }
       var results = fw.validateForm(form, options, fieldsEntered);
-      options.processErrors(results, fieldsEntered);
+
+      options.processErrors(results, fieldsEntered, submission);
       options.processVisibility(results);
       if (options.after) {
         options.after(results.validForm, results);
@@ -176,7 +177,7 @@ var fieldsEntered = {};
 
     $(this).submit(function (e) {
       fieldsEntered = getForm();
-      if (!validate()) {
+      if (!validate(true)) {
         e.preventDefault();
         e.stopPropagation();
 
