@@ -106,7 +106,7 @@ var fieldsEntered = {};
 
         if (item.type == "radio") {
           if (!item.checked) {
-            val = undefined;
+            val = "";
           }else{
             val = $(this).val();
           }
