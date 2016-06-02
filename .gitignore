@@ -1,2 +1,4 @@
-﻿build/*.nupkg
+build/*.nupkg
 *.nupkg
+node_modules
+npm-debug.log
