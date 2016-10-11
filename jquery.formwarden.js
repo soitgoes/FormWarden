@@ -151,14 +151,14 @@ var fieldsEntered = {};
             }
           }else{
             form[item.name] = val;
-          }  
+          }
         }
       });
 
       return form;
     };
 
-    var validate = function (submission) {
+    var validate = function (submission, e) {
       //get all the field value pairs
       var form = getForm();
       if (options.before) {
@@ -169,7 +169,7 @@ var fieldsEntered = {};
       options.processErrors(results, fieldsEntered, submission);
       options.processVisibility(results);
       if (options.after) {
-        options.after(results.validForm, results);
+        options.after(results.validForm, results, submission, e);
       }
 
       return results.validForm;
@@ -177,7 +177,7 @@ var fieldsEntered = {};
 
     $(this).submit(function (e) {
       fieldsEntered = getForm();
-      if (!validate(true)) {
+      if (!validate(true, e)) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -200,9 +200,9 @@ var fieldsEntered = {};
     });
 
     if (options.enableBlur) {
-      var updateFunction = function () {
+      var updateFunction = function (e) {
         fieldsEntered[this.name] = true;
-        return validate();
+        return validate(false, e);
       };
 
       $("select[name]", validationForm).change(updateFunction);
