@@ -106,7 +106,11 @@ var fieldsEntered = {};
 
         if (item.type == "radio") {
           if (!item.checked) {
-            val = "";
+            if (form[item.name]) {
+              val = form[item.name];
+            }else{
+              val = "";
+            }
           }else{
             val = $(this).val();
           }
@@ -158,7 +162,7 @@ var fieldsEntered = {};
       return form;
     };
 
-    var validate = function (submission) {
+    var validate = function (submission, e) {
       //get all the field value pairs
       var form = getForm();
       if (options.before) {
@@ -169,7 +173,7 @@ var fieldsEntered = {};
       options.processErrors(results, fieldsEntered, submission);
       options.processVisibility(results);
       if (options.after) {
-        options.after(results.validForm, results);
+        options.after(results.validForm, results, submission, e);
       }
 
       return results.validForm;
@@ -183,7 +187,7 @@ var fieldsEntered = {};
       submitButton.attr('innerHTML', 'Processing')
 
       fieldsEntered = getForm();
-      if (!validate(true)) {
+      if (!validate(true, e)) {
         e.preventDefault();
         e.stopPropagation();
         submitButton.removeAttr('disabled');
@@ -208,9 +212,9 @@ var fieldsEntered = {};
     });
 
     if (options.enableBlur) {
-      var updateFunction = function () {
+      var updateFunction = function (e) {
         fieldsEntered[this.name] = true;
-        return validate();
+        return validate(false, e);
       };
 
       $("select[name]", validationForm).change(updateFunction);
