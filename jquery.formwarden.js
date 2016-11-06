@@ -151,7 +151,7 @@ var fieldsEntered = {};
             }
           }else{
             form[item.name] = val;
-          }  
+          }
         }
       });
 
@@ -176,10 +176,18 @@ var fieldsEntered = {};
     };
 
     $(this).submit(function (e) {
+      //disable the submit button to prevent double submission
+      var submitButton = $(this).find('input[type=submit]')
+      var submitButtonText = submitButton.innerHTML;
+      submitButton.prop('disabled', true);
+      submitButton.attr('innerHTML', 'Processing')
+
       fieldsEntered = getForm();
       if (!validate(true)) {
         e.preventDefault();
         e.stopPropagation();
+        submitButton.removeAttr('disabled');
+        submitButton.attr('innerHTML', submitButtonText);
 
         if (typeof $(this).data('invalid') === 'function') {
           $(this).data('invalid')(e);
