@@ -79,10 +79,8 @@ var fieldsEntered = {};
         var item = $("[name='" + fieldname + "']");
         if (results.fields[fieldname].visible) {
           item.parent('p, div, label').show();
-          item.removeAttr('disabled');
         } else {
           item.parent('p, div, label').hide();
-          item.attr('disabled', 'disabled');
         }
       }
     }
