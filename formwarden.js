@@ -17,7 +17,6 @@
   }
 
 })(function (serverSideRequire, exports) {
-  "use strict";
 
   var path = !serverSideRequire ? null : serverSideRequire('path'),
     fs = !serverSideRequire ? null : serverSideRequire('fs');
