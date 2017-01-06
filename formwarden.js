@@ -114,7 +114,7 @@
     // If there is not a visibility function or it is true then execute the validation.
     var validations = checkVisibility ? fieldOptions.validations : fieldOptions;
 
-    var serverSide = !!!window;
+    var serverSide = typeof window === 'undefined';
 
     for (var i = 0; i < validations.length; i++) {
       var validation = validations[i];
