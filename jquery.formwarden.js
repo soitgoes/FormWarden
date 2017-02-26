@@ -72,18 +72,6 @@ var fieldsEntered = {};
       }
     }
 
-    var processVisibility = function (results) {
-      var fieldname;
-
-      for (fieldname in results.fields) {
-        var item = $("[name='" + fieldname + "']");
-        if (results.fields[fieldname].visible) {
-          item.parent('p, div, label').show();
-        } else {
-          item.parent('p, div, label').hide();
-        }
-      }
-    }
 
 
     if (this[0].tagName !== "FORM") {
@@ -93,7 +81,6 @@ var fieldsEntered = {};
 
     options.validators = options.validators || {};
     options.processErrors = options.processErrors ? options.processErrors : processErrors;
-    options.processVisibility = options.processVisibility ? options.processVisibility : processVisibility;
     var getForm = function () {
       var form = {};
 
@@ -169,7 +156,6 @@ var fieldsEntered = {};
       var results = fw.validateForm(form, options, fieldsEntered);
 
       options.processErrors(results, fieldsEntered, submission);
-      options.processVisibility(results);
       if (options.after) {
         options.after(results.validForm, results, submission, e);
       }
