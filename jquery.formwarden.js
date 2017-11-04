@@ -1,6 +1,6 @@
 var fieldsEntered = {};
-
 (function ($) {
+
   $.fn.validation = function () {
     var args = Array.prototype.slice.call(arguments);
 
@@ -11,7 +11,7 @@ var fieldsEntered = {};
       $(this).data('invalid', args[1]);
       return;
     }
-
+    var validationForm = this;
     // This function converts functions which are in string form to function objects.
     // In essence, it deserializes a function.
     function funcDefine(args) {
@@ -44,9 +44,7 @@ var fieldsEntered = {};
       invalidClass: "invalid"
     }, arguments[0]) : {};
 
-    var validationForm = this;
-
-    var processErrors = function (result, fieldsEntered, submission) {
+    this.processErrors = function (result, fieldsEntered, submission) {
       var fieldName,
         parent,
         field,
@@ -80,8 +78,8 @@ var fieldsEntered = {};
     }
 
     options.validators = options.validators || {};
-    options.processErrors = options.processErrors ? options.processErrors : processErrors;
-    var getForm = function () {
+    options.processErrors = options.processErrors ? options.processErrors : this.processErrors;
+    this.getForm = function () {
       var form = {};
 
       $("[name]", validationForm).each(function (index, item) {
@@ -147,9 +145,9 @@ var fieldsEntered = {};
       return form;
     };
 
-    var validate = function (submission, e) {
+    this.validate = function (submission, e) {
       //get all the field value pairs
-      var form = getForm();
+      var form = validationForm.getForm();
       if (options.before) {
         options.before(form);
       }
@@ -162,7 +160,9 @@ var fieldsEntered = {};
 
       return results.validForm;
     };
-
+    var isValid = function(){
+      return validate(true, {});
+    }
     $(this).submit(function (e) {
       //disable the submit button to prevent double submission
       var submitButton = $(this).find('input[type=submit]')
@@ -170,8 +170,9 @@ var fieldsEntered = {};
       submitButton.prop('disabled', true);
       submitButton.attr('innerHTML', 'Processing')
 
-      fieldsEntered = getForm();
-      if (!validate(true, e)) {
+      fieldsEntered = validationForm.getForm();
+      var result = validationForm.validate(true, e)
+      if (!result) {
         e.preventDefault();
         e.stopPropagation();
         submitButton.removeAttr('disabled');
@@ -217,5 +218,6 @@ var fieldsEntered = {};
       });
     }
     fieldsEntered = {};
+    return this;
   };
 })(jQuery);

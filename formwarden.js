@@ -60,10 +60,7 @@
 
   var defaultValidators = {
     required: function (value) {
-      if (value === undefined || value === null) {
-        return true;
-      }
-      return value.length || value !== "";
+      return value && value.toString().length;
     },
     email: function (value) {
       if (value) {
@@ -158,13 +155,53 @@
     }
     return true;
   }
+  function getMatchingHashes(obj, filter){
+    var result = {};
+    for (var key in filter){
+      if (obj[key]) result[key] = obj[key];
+    }
+    return result;
+  }
+  //browser support >= IE10.  Otherwise you'll need to rewrite
+  exports.writeErrors = function (validationResult){
+    if (!validationResult){
+      console.error('Must pass validationResult')
+      return;
+    }
+    var invalidEls = document.getElementsByClassName('invalid');
+    for (var i = 0; i< invalidEls.length; i++){
+      if (invalidEls[i].classList){
+        invalidEls[i].classList.remove('invalid');
+      } else {
+        invalidEls[i].removeAttribute('class');
+      }
+    }
+    for(var key in validationResult.fields){
+      var field = validationResult.fields[key];
+      if (!field.valid && key){
+        invalidEls = document.getElementsByName(key)
+        for (var i =0 ; i < invalidEls.length; i++){
+          if (invalidEls[i].classList){
+            invalidEls[i].classList.add('invalid');
+          } else {
+            invalidEls[i].setAttribute('class', 'invalid');
+          }
+        }
+      }
+    }
+  }
+
   // If server side don't bother supplying fieldsEntered.
-  exports.validateForm = function (form, validationOptions) {
+  exports.validateForm = function (form, validationOptions, fieldsEntered) {
     var fields = {};
     var validForm = true;
     var validators = extend(defaultValidators, validationOptions.validators || {});
+    var filteredValidation = validationOptions.fields;
+    if (fieldsEntered !== undefined){ //just validate those fields that have been entered
+      filteredValidation = getMatchingHashes(validationOptions.fields, fieldsEntered);
+    }
 
-    each(validationOptions.fields, function (val, key) {
+    each(filteredValidation, function (val, key) {
       var visible = isVisibleField(form, val),
         mesg = isInvalidField(form, key, val, validators, validationOptions.conventionBased),
         valid = (!visible) || (visible && mesg === ""),
